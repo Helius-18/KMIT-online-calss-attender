@@ -12,11 +12,11 @@ so just sit behind and watch the show.😉
 Written on pyton3.
 
 # Configure
-  There are few things you need to configure before using the bot.
+  There are few things you need to configure before using the bot.<br>
   ->This bot only takes you class page so to join you need to use extention.
   # For google
    as of googele it just takes you to the join page.<br>
-   you can install this extention and turn on auto join which also turms your mic and video off while joining<br>
+   you can install this <a href="https://chrome.google.com/webstore/detail/google-meet-enhancement-s/ljojmlmdapmnibgflmmminacbjebjpno?h1=en">extention</a> and turn on auto join which also turms your mic and video off while joining<br>
    or you can just do that yourself.
   # For zoom
    zoom does'nt require any extentions but you can turn on auto connect audio, auto mic,video off something like that in settings.<br>
