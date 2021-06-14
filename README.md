@@ -26,4 +26,4 @@ Written on pyton3.
    afterall at the end of the day everything is for attendence.😂<br>
    
   # Versions
-   <a href="/main.py">Version 1.0.0</a><br>
+   <a href="/main.py">Version 1.1.3</a><br>
