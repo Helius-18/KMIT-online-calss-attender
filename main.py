@@ -1,8 +1,26 @@
 import time
 import subprocess
 import webbrowser
-import schedule
-import requests
+
+def installer(cmd_line):
+        p = subprocess.Popen(cmd_line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        out = p.communicate()
+        print(out)
+
+try:
+    import requests
+except:
+    print("requests library not found")
+    print("installing...requests...")
+    installer("pip install requests")
+
+
+try:
+    import schedule
+except:
+    print("schedule library not found")
+    print("installing...schedule...")
+    installer("pip install schedule")
 
 
 def discorder(status,link):
@@ -32,8 +50,7 @@ def discorder(status,link):
 
 
 
-def main(flag):
-    flag+=1
+def main():
     def joinclass(k):
         try:
             driver.find_element_by_link_text("JOIN").click()
@@ -51,20 +68,21 @@ def main(flag):
             discorder("Class link not found",driver.current_url)
 
     def opener(link):
+        global i
+        i=i+1
         link=driver.current_url
-        print("Url found:  ",link)
         print("opening class...")
+        if "zoom" in link:
+            s=link.split("#")
+            link=s[0]
         webbrowser.open(link)
+        print("Url found:  ",link)
         time.sleep(3)
         print("closing driver...")
         print("sending msg to discord..")
         discorder("class join successfull",link)
         driver.quit()
 
-    def installer(cmd_line):
-        p = subprocess.Popen(cmd_line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        out = p.communicate()
-        print(out)
 
     try:
         from selenium import webdriver
@@ -106,28 +124,31 @@ def main(flag):
         except:
             print("An error has occured....so get out!!!!")
             discorder("Class join falied","http://kmitonline.com/login/index.php")
+            i=7
             driver.quit()
 
     print("minimizing window...")
     driver.minimize_window()
+    print(i,start_time[i])
     Login()
+    print(i,start_time[i])
     print("The End")
 
 
 
 
-day={"mon":["09:00","11:00","14:00"],"tue":["09:00","11:00"],"wed":["09:00","11:00","14:00"],"thu":["09:00","11:00","14:00"],"fri":["09:00","11:00","14:00","15:00"],"sat":["09:00","11:00"]}
+day={"mon":["09:05","11:05","14:05"],"tue":["09:05","11:05"],"wed":["09:05","11:05","14:05"],"thu":["09:05","11:05","14:05"],"fri":["12:43","12:44"],"sat":["09:05","11:05"]}
 n=input("Enter day:")
 i=int(input("start from which class:"))
 i=i-1
 start_time=day[n]
 
-schedule.every().monday.at(start_time[i]).do(main,i)
-schedule.every().tuesday.at(start_time[i]).do(main,i)
-schedule.every().wednesday.at(start_time[i]).do(main,i)
-schedule.every().thursday.at(start_time[i]).do(main,i)
-schedule.every().friday.at(start_time[i]).do(main,i)
-schedule.every().saturday.at(start_time[i]).do(main,i)
+schedule.every().monday.at(start_time[i]).do(main)
+schedule.every().tuesday.at(start_time[i]).do(main)
+schedule.every().wednesday.at(start_time[i]).do(main)
+schedule.every().thursday.at(start_time[i]).do(main)
+schedule.every().friday.at(start_time[i]).do(main)
+schedule.every().saturday.at(start_time[i]).do(main)
 
 while(i<len(start_time)):
 	schedule.run_pending()
