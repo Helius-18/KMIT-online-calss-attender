@@ -111,8 +111,8 @@ def main():
     def Login():
         try:
             driver.get("http://kmitonline.com/login/index.php")
-            username="19bd1a0573"
-            password="resetme@1"
+            username="" #enter username
+            password="" #enter password
             driver.find_element_by_id("username").send_keys(username)
             driver.find_element_by_id("password").send_keys(password)
             driver.find_element_by_id("loginbtn").click()
