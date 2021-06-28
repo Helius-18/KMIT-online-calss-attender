@@ -23,12 +23,13 @@ except:
     installer("pip install schedule")
 
 
-def discorder(status,link):
-    url = "" #webhook url, from here: https://i.imgur.com/f9XnAew.png
+def discorder(status,link,tried):
+    url = "https://discord.com/api/webhooks/850621284059840553/QBywwPw-BsvKVud2VYDIKoNM3WwJd9G3uU_T0Q1qxq1_EtfOM5SfHyfc6PPlUj9VPOzX" #webhook url, from here: https://i.imgur.com/f9XnAew.png
 
     data = {
         "content" : status,
-        "username" : "name"
+        "content" : status+"\n"+str(tried)+" try",
+        "username" : "Hori"
     }
 
     #for all params, see https://discordapp.com/developers/docs/resources/channel#embed-object
@@ -49,7 +50,7 @@ def discorder(status,link):
         print("Payload delivered successfully, code {}.".format(result.status_code))
 
 
-
+k=1
 def main():
     def joinclass(k):
         try:
@@ -58,18 +59,16 @@ def main():
             opener(driver.current_url)
         except:
             print("Join button not found, trying again")
-            time.sleep(1)
+            time.sleep(60)
             driver.refresh()
-            if(k<1):
+            if(k<15):
                 print("trying again...",k)
                 k+=1
                 joinclass(k)
             print("Seems like there is no class today")
-            discorder("Class link not found",driver.current_url)
+            discorder("Class link not found",driver.current_url,k)
 
     def opener(link):
-        global i
-        i=i+1
         link=driver.current_url
         print("opening class...")
         if "zoom" in link:
@@ -80,7 +79,7 @@ def main():
         time.sleep(3)
         print("closing driver...")
         print("sending msg to discord..")
-        discorder("class join successfull",link)
+        discorder("class join successfull",link,k)
         driver.quit()
 
 
@@ -110,11 +109,10 @@ def main():
         print("driver is ready...")
     
     def Login():
-        k=0
         try:
             driver.get("http://kmitonline.com/login/index.php")
-            username=""
-            password=""
+            username="19bd1a0573"
+            password="resetme@1"
             driver.find_element_by_id("username").send_keys(username)
             driver.find_element_by_id("password").send_keys(password)
             driver.find_element_by_id("loginbtn").click()
@@ -123,33 +121,10 @@ def main():
             joinclass(k)
         except:
             print("An error has occured....so get out!!!!")
-            discorder("Class join falied","http://kmitonline.com/login/index.php")
-            i=7
+            discorder("Class join falied","http://kmitonline.com/login/index.php",k)
             driver.quit()
 
     print("minimizing window...")
     driver.minimize_window()
-    print(i,start_time[i])
     Login()
-    print(i,start_time[i])
     print("The End")
-
-
-
-
-day={"mon":["09:05","11:05","14:05"],"tue":["09:05","11:05"],"wed":["09:05","11:05","14:05"],"thu":["09:05","11:05","14:05"],"fri":["12:43","12:44"],"sat":["09:05","11:05"]}
-n=input("Enter day:")
-i=int(input("start from which class:"))
-i=i-1
-start_time=day[n]
-
-schedule.every().monday.at(start_time[i]).do(main)
-schedule.every().tuesday.at(start_time[i]).do(main)
-schedule.every().wednesday.at(start_time[i]).do(main)
-schedule.every().thursday.at(start_time[i]).do(main)
-schedule.every().friday.at(start_time[i]).do(main)
-schedule.every().saturday.at(start_time[i]).do(main)
-
-while(i<len(start_time)):
-	schedule.run_pending()
-	time.sleep(3)
