@@ -24,7 +24,7 @@ except:
 
 
 def discorder(status,link,tried):
-    url = "https://discord.com/api/webhooks/850621284059840553/QBywwPw-BsvKVud2VYDIKoNM3WwJd9G3uU_T0Q1qxq1_EtfOM5SfHyfc6PPlUj9VPOzX" #webhook url, from here: https://i.imgur.com/f9XnAew.png
+    url = "" #webhook url, from here: https://i.imgur.com/f9XnAew.png
 
     data = {
         "content" : status,
@@ -111,8 +111,8 @@ def main():
     def Login():
         try:
             driver.get("http://kmitonline.com/login/index.php")
-            username="19bd1a0573"
-            password="resetme@1"
+            username=""
+            password=""
             driver.find_element_by_id("username").send_keys(username)
             driver.find_element_by_id("password").send_keys(password)
             driver.find_element_by_id("loginbtn").click()
